@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import setPathData from "../ayudantes/setPathData.js";
+import setPathData from "../ayudante/setPathData.js";
 let products= [];
 
 export default class ProductManager {
