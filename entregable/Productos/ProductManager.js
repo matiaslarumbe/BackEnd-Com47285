@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import setPathData from "../ayudante/setPathData.js";
+import setPathData from "../ayudantes/setPathData.js";
 let products= [];
 
 export default class ProductManager {
@@ -11,6 +11,7 @@ export default class ProductManager {
     //addProduct
       async addProduct(newProduct) { 
         try {
+            console.log(`========\n${this.path}\n========`)
             const directory = await setPathData(this.path);
            // this.path = directory
         if (directory !== '') {
