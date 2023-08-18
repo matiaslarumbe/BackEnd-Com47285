@@ -1,5 +1,5 @@
-import Product from "./productos/Products.js";
-import ProductManager from "./productos/ProductManager.js";
+import Product from "../productos/Products.js";
+import ProductManager from "../productos/ProductManager.js";
 
 const manager = new ProductManager();
 const product = new Product('Producto1','Test',10,'Test',12);
