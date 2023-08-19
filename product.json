@@ -1,0 +1,26 @@
+[
+    {
+      "title": "almendra",
+      "description": "fruto-seco",
+      "price": 1320,
+      "thumbnail": "picture",
+      "code": 110,
+      "id": 3
+    },
+    {
+      "title": "nueces",
+      "description": "fruto-seco",
+      "price": 1500,
+      "thumbnail": "picture",
+      "code": 50,
+      "id": 1
+    },
+    {
+      "title": "fruta-desecada",
+      "description": "fruta",
+      "price": 500,
+      "thumbnail": "picture",
+      "code": 110,
+      "id": 2
+    }
+  ]
