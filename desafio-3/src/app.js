@@ -1,5 +1,5 @@
 import express from "express";
-import ProductManager from "../../desafio-2/ProductManager";
+import ProductManager from "../src/ProductManager.js";
 
 const productManager = new ProductManager();
 
@@ -7,12 +7,24 @@ const PORT = 4000
 
  const app = express()
 
- const path = "./product.json";
+ const path = "";
 
  app.get('/', (req, res) => {
     res.send("hola")
 
  })
+ app.get("/products", async (req, res) => {
+    const products = await productManager.getProducts();
+    console.log(req.query);
+    const { limit } = req.query;
+    if (limit) {
+      const productsFiltered = products.slice(0, limit);
+      return res.send(productsFiltered);
+    }
+  
+    res.send(products);
+  });
+  
 
 
 
@@ -34,6 +46,3 @@ const PORT = 4000
      res.send("Producto no encontrado");
    }
  );
-
-
-
