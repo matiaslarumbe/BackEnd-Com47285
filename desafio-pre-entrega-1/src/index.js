@@ -1,6 +1,7 @@
 import express from 'express'
 import multer from 'multer'
 import prodsRouter from './routes/products.routes.js'
+import cartRouter from './routes/carts.routes.js'
 import { __dirname } from './path.js'
 import path from 'path'
 
@@ -26,7 +27,7 @@ const upload = multer({ storage: storage })
 // Routes
 app.use('/api/products', prodsRouter)
 app.use('/static', express.static(path.join(__dirname, '/public')))
-
+app.use('/api/carts', cartRouter)
 app.post('/upload', upload.single('product'), (req,res) => {
     console.log(req.file)
     console.log(req.body)

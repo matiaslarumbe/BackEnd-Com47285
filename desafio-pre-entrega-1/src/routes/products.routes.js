@@ -1,5 +1,6 @@
 import { Router } from "express";
 
+
 const prodsRouter = Router()
 
 prodsRouter.get('/', async (req, res) => {
@@ -10,7 +11,6 @@ prodsRouter.get('/', async (req, res) => {
     const products = prods.slice(0, limit)
 
     res.status(200).send(products)
-
 })
 
 
@@ -66,6 +66,55 @@ prodsRouter.delete('/:id', async (req, res) => {
             res.status(404).send("Producto no encontrado")
     }
 
+})
+
+// Ruta producto
+prodsRouter.post('/', async (req, res) => {
+    const { limit } = req.body
+
+    const confirmacion = await productManager.addProduct(req.body)
+
+    if(confirmacion) {
+        res.status(200).send("Producto creado correctamente")
+    } else{
+        res.status(400).send("Error en crear producto")
+    }
+    
+    const products = prods.slice(0, limit)
+
+    res.status(200).send(products)
+})
+
+prodsRouter.put('/:id', async (req, res) => {
+    const { limit } = req.body
+
+    const confirmacion = await productManager.updateProduct(parseInt (req.params.id), req.body)
+
+    if(confirmacion) {
+        res.status(200).send("Producto actualizado correctamente")
+    } else{
+        res.status(400).send("Error en actualizar producto")
+    }
+    
+    const products = prods.slice(0, limit)
+
+    res.status(200).send(products)
+})
+
+prodsRouter.delete('/:id', async (req, res) => {
+    const { limit } = req.body
+
+    const confirmacion = await productManager.deleteProduct(parseInt (req.params.id), req.body)
+
+    if(confirmacion) {
+        res.status(200).send("Producto aeliminado correctamente")
+    } else{
+        res.status(400).send("Error en eliminar producto")
+    }
+    
+    const products = prods.slice(0, limit)
+
+    res.status(200).send(products)
 })
 
 
