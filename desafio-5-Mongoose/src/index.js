@@ -14,7 +14,7 @@ import messageRouter from "./routes/messages.routes.js";
 const app = express()
 const PORT = 4000
 
-mongoose.connect('mongodb+srv://matiaslarumbe:coderhouse321@cluster0.anbxejn.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://matiaslarumbe:<password>@cluster0.anbxejn.mongodb.net/?retryWrites=true&w=majority')
 .then(() => console.log('BDD conectada'))
 .catch(() => console.log('Error en conexion a la BDD'))
 
