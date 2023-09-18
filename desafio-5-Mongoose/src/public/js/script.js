@@ -1,3 +1,3 @@
 const socket = io()
 
-socket.emit('mensajeConexion', "Hola")
+socket.emit('mensajeConexion', "Hola jaja")

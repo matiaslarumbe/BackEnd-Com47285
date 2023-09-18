@@ -4,8 +4,11 @@ const socket = io()
 
 form.addEventListener('submit', (e) => {
     e.preventDefault()
-    const datForm = new FormData (e.target)
+    console.log(e.target)
+    const datForm = new FormData(e.target)//genera un objeto iterador
+    console.log(datForm.get('title'))
     const prod = Object.fromEntries(datForm)
+    console.log(prod)
     socket.emit('nuevoProducto', prod)
     e.target.reset()
 })
