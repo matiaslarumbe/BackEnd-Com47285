@@ -6,9 +6,9 @@
     <label for="Category">Category</label>
     <input type="text" name="Category" required>
     <label for="Price">Price</label>
-    <input type="number" name="Price" required>
+    <input type="number" name="Price" required min="0"> 
     <label for="Stock">Stock</label>
-    <input type="number" name="Stock" required>
+    <input type="number" name="Stock" required min="0">
     <label for="Code">Code</label>
     <input type="text" name="Code" required>
   
@@ -16,4 +16,5 @@
 </form>
 
 <button id="botonProductos">Mostrar Productos</button>
+<ul id="listaProductos"></ul>
 

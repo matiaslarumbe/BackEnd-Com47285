@@ -20,4 +20,9 @@ const cartSchema = new Schema({
     
 })
 
+// cartSchema.pre('findOne', function() {
+//     this.populate('products.id_prod')
+
+// }) //carrito creado en mongoo atlas
+
 export const cartModel = model('carts', cartSchema)
