@@ -1,0 +1,83 @@
+[
+    {
+      "title": "Almendra",
+      "category": "Fruto-seco",
+      "stock": 10,
+      "price": 1320,
+      "description": "Productos de Mendoza",
+      "code": 11
+    },
+    {
+      "title": "Nueces",
+      "category": "Fruto-seco",
+      "stock": 10,
+      "price": 1500,
+      "description": "Productos de Mendoza",
+      "code": 5
+    },
+    {
+      "title": "Fruta-desecada",
+      "category": "Fruta",
+      "stock": 10,
+      "price": 500,
+      "description": "Productos de Mendoza",
+      "code": 12
+    },
+    {
+        "title": "Castaña Caju",
+        "category": "Fruto-seco",
+        "stock": 10,
+        "price": 1600,
+        "description": "Productos de Mendoza",
+        "code": 60
+      },
+      {
+        "title": "Pistacho",
+        "category": "Fruto-seco",
+        "stock": 10,
+        "price": 2000,
+        "description": "Productos de Mendoza",
+        "code": 70
+      },
+      {
+        "title": "Avellana",
+        "category": "Fruto-seco",
+        "stock": 10,
+        "price": 1700,
+        "description": "Productos de Mendoza",
+        "code": 80
+      },
+      {
+          "title": "Avena",
+          "category": "Cereal",
+          "stock": 10,
+          "price": 800,
+          "description": "Productos de Mendoza",
+          "code": 90
+        },
+        {
+          "title": "Copo de maiz",
+          "category": "Cereal",
+          "stock": 10,
+          "price": 700,
+          "description": "Productos de Mendoza",
+          "code": 100
+        },
+        {
+          "title": "Granola",
+          "category": "Cereal",
+          "stock": 10,
+          "price": 1000,
+          "description": "Productos de Mendoza",
+          "code": 130
+        },
+        {
+          "title": "Mix de semillas",
+          "category": "Semillas",
+          "stock": 10,
+          "price": 750,
+          "description": "Productos de Mendoza",
+          "code": 140
+        }
+    ]
+  
