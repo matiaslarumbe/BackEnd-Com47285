@@ -144,6 +144,15 @@ app.get('/login', (req, res) => {
     })
 })
 
+app.get('/signup', (req, res) => {
+    res.render('signup', {
+        css: "style.css",
+        title: "signup",
+        js: "signup.js"
+
+    })
+})
+
 app.get('/logout', (req, res) => {
     res.render('logout', {
         css: "style.css",
@@ -174,6 +183,9 @@ app.set('views', path.resolve(__dirname, './views')) //Ruta de vistas
 const upload = multer({ storage: storage })
 app.use('/static', express.static(path.join(__dirname, '/public'))) //Unir rutas en una sola concatenandolas
 
+app.use('/login', express.static(path.join(__dirname, '/public')))
+app.use('/logout', express.static(path.join(__dirname, '/public')))
+app.use('/signup', express.static(path.join(__dirname, '/public')))
 
 //socket
 const io = new Server(server)
