@@ -1,5 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
+import { Authorization, passportError } from "../utils/messagesError.js";
+import { generateToken } from "../utils/jwt.js";
 
 const sessionRouter = Router()
 
@@ -16,6 +18,11 @@ sessionRouter.post('/login', passport.authenticate('login'), async (req, res) =>
         email: req.user.email,  
     }
 
+    const token = generateToken(req.user)
+    res.cookie('jwtCookie', token, {
+        maxAge: 43200000
+    })
+
     res.status(200).send({ payload: req.user })
 
    } catch (error) {
@@ -30,8 +37,9 @@ sessionRouter.get('/logout', (req, res) => {
     if (req.session.login) {
         req.session.destroy()
     }
-    //res.status(200).send({ resultado: 'Usuario deslogueado' })
-    res.redirect('rutaLogin', 200, { resultado: 'Usuario deslogueado' })
+    res.clearCookie('jwtCookie')
+    res.status(200).send({ resultado: 'Usuario deslogueado' })
+    // res.redirect('rutaLogin', 200, { resultado: 'Usuario deslogueado' })
 })
 
 sessionRouter.post('/register', passport.authenticate('register'), async (req, res) => {
@@ -54,6 +62,8 @@ sessionRouter.get('/githubCallback', passport.authenticate('github'), async (req
     req.session.user = req.user
     res.status(200).send({mensaje: 'usuario logueado'})
 })
+
+
 
 sessionRouter.post('/signup', async (req, res) => {
     const { first_name, last_name, age, email, password } = req.body;
@@ -81,6 +91,16 @@ sessionRouter.post('/signup', async (req, res) => {
     } catch (error) {
         res.status(500).send({ error: `Error en el registro: ${error}` });
     }
-});
+})
+
+
+sessionRouter.get('/testJWT', passport.authenticate('jwt', {session: false }), (req,res) => {
+    res.send(req.user)
+
+})
+
+sessionRouter.get('/current', passportError('jwt'), Authorization('user'), (req, res) => {
+    res.send(req.user)
+})
 
 export default sessionRouter

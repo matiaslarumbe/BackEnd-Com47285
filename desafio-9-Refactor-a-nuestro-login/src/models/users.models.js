@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 import mongoosePaginate from 'mongoose-paginate-v2';
-
+import {cartModel} from './carts.models.js'
 
 const userSchema = new Schema({
     first_name:{
@@ -29,13 +29,24 @@ const userSchema = new Schema({
         type: String,
         default: 'user'
 
+     },
+     cart: {
+        type: Schema.Types.ObjectId, ref: 'carts'
      }
 })
 
 
 userSchema.plugin(mongoosePaginate);
 
-  
+userSchema.pre('save', async function(next){
+    try {
+        const newCart = await cartModel.create({})
+        this.cart = newCart._id
+    }catch(error) {
+        next(error)
+    }
+
+})
 
 
 export const userModel = model('users', userSchema)

@@ -1,32 +1,45 @@
 import { Router } from "express";
 import { productModel } from "../models/products.models.js";
+import { paginate } from "mongoose-paginate-v2";
 
-const productRouter = Router()
+const productRouter = Router();
 
-productRouter.get('/', async (req,res) => {
-    const { limit, page, category, sort } = req.query;
 
-    try {
-        const result = await ProductManager.findAll(limit, page, category, sort);
+productRouter.get('/', async (req, res) => {
+  const { limit, page, category, sort } = req.query;
 
-        const response = {
-            status: "success",
-            payload: result.docs, // Resultado de los productos solicitados
-            totalPages: result.totalPages,
-            prevPage: result.prevPage,
-            nextPage: result.nextPage,
-            page: result.page,
-            hasPrevPage: result.hasPrevPage,
-            hasNextPage: result.hasNextPage,
-            prevLink: result.hasPrevPage ? `http://${req.headers.host}${req.baseUrl}?limit=${limit}&page=${result.prevPage}&category=${category}&sort=${sort}` : null,
-            nextLink: result.hasNextPage ? `http://${req.headers.host}${req.baseUrl}?limit=${limit}&page=${result.nextPage}&category=${category}&sort=${sort}` : null
-        };
-        res.status(200).send({respuesta: 'OK', mensaje: prods})
-    } catch(error) {
-        res.status(400).send({respuesta: 'Error en consultar productos', mensaje: error})
-    }
-         
-})
+  try {
+    
+    const result = await productModel.paginate(
+      { category },
+      {
+        limit: parseInt(limit) || 10, // Número máximo de documentos por página
+        page: parseInt(page) || 1, // Página actual
+        sort: sort, // Ordenamiento opcional
+      }
+    );
+
+    const response = {
+      status: "success",
+      payload: result.docs, // Resultado de los productos solicitados
+      totalPages: result.totalPages,
+      prevPage: result.prevPage,
+      nextPage: result.nextPage,
+      page: result.page,
+      hasPrevPage: result.hasPrevPage,
+      hasNextPage: result.hasNextPage,
+      prevLink: result.hasPrevPage ? `http://${req.headers.host}${req.baseUrl}?limit=${limit}&page=${result.prevPage}&category=${category}&sort=${sort}` : null,
+      nextLink: result.hasNextPage ? `http://${req.headers.host}${req.baseUrl}?limit=${limit}&page=${result.nextPage}&category=${category}&sort=${sort}` : null
+    };
+
+    res.status(200).send(response);
+  } catch (error) {
+    res.status(400).send({ respuesta: 'Error en consultar productos', mensaje: error });
+  }
+});
+
+// Resto de tu código...
+
 
 productRouter.get('/:id', async (req,res) => {
     const {id} = req.params

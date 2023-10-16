@@ -11,13 +11,8 @@ import { engine } from "express-handlebars";
 import { __dirname } from './path.js'
 import { Server } from 'socket.io'
 import path from 'path'
+import router from './routes/index.routes.js';
 
-
-import userRouter from "./routes/users.routes.js";
-import productRouter from "./routes/products.routes.js";
-import cartRouter from "./routes/cart.routes.js";
-import messageRouter from "./routes/messages.routes.js";
-import sessionRouter from './routes/session.routes.js';
 
 
 
@@ -77,11 +72,8 @@ const storage = multer.diskStorage({
 
 
 //Route
-app.use('/api/users', userRouter)
-app.use('/api/products', productRouter)
-app.use('/api/carts', cartRouter)
-app.use('/api/message', messageRouter)
-app.use('/api/sessions', sessionRouter)
+app.use('/', router)
+
 
 // //cookies
 // app.get('/setCookie', (req, res) => {
