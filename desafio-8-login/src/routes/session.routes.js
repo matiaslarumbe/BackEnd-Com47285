@@ -8,17 +8,17 @@ sessionRouter.post('/login', async (req, res) => {
 
     try {
         if (req.session.login) {
-            res.status(200).send({ resultado: 'Login ya existente' })
+            return res.status(200).send({ resultado: 'Login ya existente' })
         }
         const user = await userModel.findOne({ email: email })
 
         if (user) {
             if (user.password == password) {
                 req.session.login = true
-                //res.status(200).send({ resultado: 'Login valido', message: user })
-                res.redirect('rutaProductos', 200, { 'info': 'user' }) //Redireccion
+                res.status(200).send({ resultado: 'Login valido', message: user })
+                // res.redirect('rutaProductos', 200, { 'info': 'user' }) //Redireccion
             } else {
-                res.status(401).send({ resultado: 'Contaseña no valida', message: password })
+                res.status(401).send({ resultado: 'Credenciales Incorrectas', message: password })
             }
         } else {
             res.status(404).send({ resultado: 'Not Found', message: user })
