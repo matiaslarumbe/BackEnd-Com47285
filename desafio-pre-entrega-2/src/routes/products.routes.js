@@ -1,6 +1,5 @@
 import { Router } from "express";
-import { productModel } from "../models/products.models.js";
-import { paginate } from "mongoose-paginate-v2";
+import { productModel } from "../models/products.models.js"
 
 const productRouter = Router();
 

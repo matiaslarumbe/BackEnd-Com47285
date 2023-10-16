@@ -18,7 +18,7 @@ import { userModel } from "./models/users.models.js";
 const app = express()
 const PORT = 4000
 
-mongoose.connect('mongodb+srv://matiaslarumbe:<>@cluster0.anbxejn.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://<>:coderhouse321@cluster0.anbxejn.mongodb.net/?retryWrites=true&w=majority')
 .then(async() => {
     console.log('BDD conectada')
         const resultado = await userModel.paginate()
