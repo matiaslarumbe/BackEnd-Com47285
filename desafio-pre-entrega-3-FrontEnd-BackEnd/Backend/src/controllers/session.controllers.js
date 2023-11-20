@@ -7,12 +7,12 @@ export const login = async (req, res) => {
             return res.status(401).send({ mensaje: "Usuario inválido" });
         }
 
-        req.session.user = {
-            first_name: req.user.first_name,
-            last_name: req.user.last_name,
-            age: req.user.age,
-            email: req.user.email,
-        };
+        // req.session.user = {
+        //     first_name: req.user.first_name,
+        //     last_name: req.user.last_name,
+        //     age: req.user.age,
+        //     email: req.user.email,
+        // };
 
         const token = generateToken(req.user);
        
@@ -24,9 +24,9 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-    if (req.session.login) {
-        req.session.destroy();
-    }
+    // if (req.session.login) {
+    //     req.session.destroy();
+    // }
     res.clearCookie('jwtCookie');
     res.status(200).send({ resultado: 'Usuario deslogueado' });
 };

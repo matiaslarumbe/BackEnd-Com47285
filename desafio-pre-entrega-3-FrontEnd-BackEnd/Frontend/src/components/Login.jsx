@@ -9,7 +9,7 @@ export const Login = () => {
     e.preventDefault()
     const datForm = new FormData(formRef.current)
     const data = Object.fromEntries(datForm)
-    console.log(data)
+    
     const response = await fetch('http://localhost:4000/api/sessions/login', {
         method: 'POST',
         headers: {
@@ -20,10 +20,10 @@ export const Login = () => {
     
     if(response.status == 200) {
         const datos = await response.json()
-        document.cookie = `jwtCookie=${datos.token}; expires${new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toUTCString()};path=/;httponly=true`
+        document.cookie = `jwtCookie=${datos.token}; expires${new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toUTCString()};path=/;`
         navigate('/products')
     }else{
-      console.log(response)
+      
     }
 
   }
@@ -33,22 +33,23 @@ export const Login = () => {
     <div className="container">
          <h2>Formulario de Login</h2>
       <form onSubmit={handleSumbit} ref={formRef} >
-        <div className="mb-3">
+        <div className="col-md-6">
           <label htmlFor="email" className="form-label">
             Email:
           </label>
           <input type="email" name="email" className="form-control" />
         </div>
-        <div className="mb-3">
+        <div className="col-md-6">
           <label htmlFor="password" className="form-label">
             Password:
           </label>
           <input type="password" name="password" className="form-control" />
         </div>
-
-        <button type="submit" className="btn btn-dark">
-          Iniciar Sesion
-        </button>
+        <div className="mt-3">
+          <button type="submit" className="btn btn-info">
+            Iniciar Sesion
+          </button>
+        </div>
       </form>
     </div>
   );
