@@ -12,7 +12,8 @@ import { __dirname } from './path.js'
 import { Server } from 'socket.io'
 import path from 'path'
 import router from './routes/index.routes.js';
-import cors from 'cors'
+import cors from 'cors';
+import mockRouter from './routes/mock.routes.js';
 
 
 
@@ -209,7 +210,7 @@ const prods = []
 io.on('connection', (socket) => {
     console.log("Servidor Socket.io conectado")
     socket.on('mensajeConexion', (user) => {
-        if (user.rol === "Admin") {
+        if (user.rol === "user") {
             socket.emit('credencialesConexion', "Usuario valido")
         } else {
             socket.emit('credencialesConexion', "Usuario no valido")
@@ -227,4 +228,9 @@ io.on('connection', (socket) => {
         socket.emit('prods', prods)
     })
 })
+
+//Faker
+const mockRouterInstance = new mockRouter();
+const mockExpressRouter = mockRouterInstance.router;
+app.use("/api/mockingproducts", mockExpressRouter);
 
