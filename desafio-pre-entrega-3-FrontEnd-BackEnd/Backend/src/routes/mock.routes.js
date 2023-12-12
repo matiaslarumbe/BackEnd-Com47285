@@ -14,8 +14,8 @@ class MockRouter {
   initMocksRoutes() {
     this.router.post(
       `${this.path}`,
-      passportError("jwt"),
-      authorization("user"),
+      // passportError("jwt"),
+      // authorization("user"),
       this.fakerProductsController.createFakerProducts.bind(
         this.fakerProductsController
       )
