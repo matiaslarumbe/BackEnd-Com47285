@@ -3,7 +3,7 @@ import { authorization, passportError } from "../utils/messagesError.js";
 import FakerProductsController from "../controllers/fakerProducts.controllers.js";
 
 class MockRouter {
-  path = "/api/mockingproducts";
+  path = "/";
   router = Router();
   fakerProductsController = new FakerProductsController();
 

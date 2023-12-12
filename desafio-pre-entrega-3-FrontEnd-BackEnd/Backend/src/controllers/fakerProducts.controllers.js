@@ -7,8 +7,10 @@ export default class FakerProductsController {
 
   async createFakerProducts(req, res) {
     try {
+      let fakerProducts = [];
+
       for (let i = 0; i < 100; i++) {
-        const createdProduct = await fakerProductsModel.create(
+        const createdProduct = fakerProducts.push(
           generateProduct()
         );
         
@@ -16,6 +18,7 @@ export default class FakerProductsController {
       }
       res.status(200).send({
         message: "Productos creados con éxito",
+        products: fakerProducts,
       });
     } catch (error) {
       console.error("Error:", error);
