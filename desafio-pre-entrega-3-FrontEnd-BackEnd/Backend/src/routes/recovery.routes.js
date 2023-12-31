@@ -46,7 +46,7 @@ recoveryRouter.post('/reset-password/:token', async (req, res) => {
             const user = await userModel.findOne({ email });
 
             if (!user) {
-                return res.status(404).send('Usuario no encontrado');
+                return res.status(404).send('Email incorrecto');
             }
 
             // Hashear la nueva contraseña antes de guardarla
