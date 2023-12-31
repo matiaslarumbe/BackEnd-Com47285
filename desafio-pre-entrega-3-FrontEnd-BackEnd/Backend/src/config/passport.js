@@ -131,6 +131,37 @@ const initializePassport = () => {
             })
         
         }
+        //Recupero de contraseña
+        passport.use('recovery', new LocalStrategy(
+            { passReqToCallback: true, usernameField: 'email' }, 
+            async (req, email, done) => {
+                const { newPassword, newPassword2 } = req.body;
+        
+                if (newPassword !== newPassword2) {
+                    return done(null, false, { message: 'Las contraseñas no coinciden' });
+                }
+        
+                try {
+                    const user = await userModel.findOne({ email });
+        
+                    if (!user) {
+                        return done(null, false, { message: 'Usuario no encontrado' });
+                    }
+        
+                    const passwordHash = createHash(newPassword);
+                    console.log('Contraseña hasheada:', passwordHash);
+        
+                    user.password = passwordHash;
+                    await user.save();
+        
+                    return done(null, user);
+                } catch (error) {
+                    console.error('Error al recuperar o guardar la contraseña:', error);
+                    return done(error);
+                }
+            }
+        ));
+        
         
 
 export default initializePassport

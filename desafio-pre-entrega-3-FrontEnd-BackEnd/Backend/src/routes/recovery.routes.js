@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { sendRecoveryMail } from "../config/nodemailer.js";
 import jwt from 'jsonwebtoken';
-import Recovery from "../models/recovery.models.js"; 
+import {userModel} from "../models/users.models.js"
+import { createHash } from '../utils/bcrypt.js';
 
 const recoveryRouter = Router();
 
@@ -12,7 +13,7 @@ recoveryRouter.post('/password-recovery', async (req, res) => {
     console.log(`Buscando usuario con correo electrónico: ${email}`);
 
     try {
-        const user = await Recovery.findOne({ email });
+        const user = await userModel.findOne({ email })
 
         if (!user) {
             console.log(`Usuario con correo electrónico ${email} no encontrado`);
@@ -42,13 +43,16 @@ recoveryRouter.post('/reset-password/:token', async (req, res) => {
         const { email } = decoded;
 
         if (newPassword === newPassword2) {
-            const user = await recoveryModel.findOne({ email });
+            const user = await userModel.findOne({ email });
 
             if (!user) {
                 return res.status(404).send('Usuario no encontrado');
             }
 
-            user.password = newPassword; 
+            // Hashear la nueva contraseña antes de guardarla
+            const passwordHash = createHash(newPassword);
+            user.password = passwordHash;
+
             await user.save();
 
             res.status(200).send('Contraseña modificada correctamente');
@@ -59,5 +63,6 @@ recoveryRouter.post('/reset-password/:token', async (req, res) => {
         res.status(500).send(`Error al modificar contraseña ${error}`);
     }
 });
+
 
 export default recoveryRouter;
