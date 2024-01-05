@@ -1,0 +1,170 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obtener a todos los productos
+      tags:
+        - Products
+      responses:
+        '200':
+          description: Productos obtenidos correctamente
+          content: 
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Products'
+        '500':
+          description: Error interno del servidor
+    post:
+      summary: Crear un nuevo producto
+      tags:
+        - Products
+      parameters:
+        - name: body 
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              title: 
+                type: string
+              description: 
+                type: string
+              price: 
+                type: string
+              stock: 
+                type: string
+              category: 
+                type: string 
+              code: 
+                type: string  
+      responses:
+        '201':
+          description: Producto creado correctamente
+          content: 
+            application/json:
+              schema: 
+                items:
+                  $ref: '#/components/schemas/Product'
+        '500':
+          description: Error interno del servidor
+  /api/products/{id}:  
+    get:
+      summary: Obtener un usuario
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $type: String
+          description: ID del producto a buscar
+      responses:
+        '200':
+          description: Producto obtenido correctamente
+          content: 
+            application/json:
+              schema: 
+                items:
+                  $ref: '#/components/schemas/Products'
+        '500':
+          description: Error interno del servidor
+    put:
+      summary: Actualizar un producto
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $type: String
+          description: ID del producto a actualizar
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              title: 
+                type: string
+              description: 
+                type: string
+              price: 
+                type: string
+              stock: 
+                type: string
+              category: 
+                type: string 
+              code: 
+                type: string
+      responses:
+        '200':
+          description: Producto actualizado correctamente
+          content: 
+            application/json:
+              schema: 
+                items:
+                  $ref: '#/components/schemas/Products'
+        '500':
+          description: Error interno del servidor
+    delete:
+      summary: Eliminar un producto
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $type: String
+          description: ID del producto a eliminar
+      responses:
+        '200':
+          description: Producto eliminado correctamente
+          content: 
+            application/json:
+              schema: 
+                items:
+                  $ref: '#/components/schemas/Products'
+        '500':
+          description: Error interno del servidor
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: "ID autogenerado por MongoDB"
+        title:
+          type: string
+          description: "Título del producto"
+        description:
+          type: string
+          description: "Descripción del producto"
+        price:
+          type: string
+          description: "Precio del producto"
+        stock:
+          type: string
+          description: "Stock del producto"
+        category:
+          type: string
+          description: "Categoría del producto"
+        status:
+          type: boolean
+          description: "Estado del producto"
+        code:
+          type: string
+          description: "Código del producto"
+      example:
+        _id: "65766e9922edd16f2f0d6bd9"
+        title: "almendras"
+        description: "mendoza"
+        price: "1000"
+        stock: "10"
+        category: "fruto seco"
+        status: true
+        code: "A222"

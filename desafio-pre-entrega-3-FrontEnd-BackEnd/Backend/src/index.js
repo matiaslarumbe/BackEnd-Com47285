@@ -14,6 +14,8 @@ import path from 'path'
 import router from './routes/index.routes.js';
 import cors from 'cors';
 import mockRouter from './routes/mock.routes.js';
+import swaggerJSDOc from 'swagger-jsdoc';
+import swaggerUiExpress from 'swagger-ui-express'
 
 
 
@@ -234,3 +236,21 @@ const mockRouterInstance = new mockRouter();
 const mockExpressRouter = mockRouterInstance.router;
 app.use("/api/mockingproducts", mockExpressRouter);
 
+
+//Swagger
+
+const swaggerOptions = {
+    definition: {
+        openapi: '3.1.0',
+        info: {
+            title: "Documentacion del curso de backend",
+            description: "API Coder Backend"
+        },
+       
+    },
+    apis: [`${__dirname}/docs/**/*.yaml`]
+
+}
+
+const specs = swaggerJSDOc(swaggerOptions)
+app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
