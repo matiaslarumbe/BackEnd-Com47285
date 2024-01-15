@@ -67,12 +67,12 @@ describe('Test Users Session api/session', function () {
       const newUser = {
         first_name: "Sandra",
         last_name: "Sanchez",
-        email: "sane131we@saewn131223.com",
+        email: "sa@sa.com",
         password: "sa@sa.com",
         age: "55"
       };
   
-      const response = await requester.post('/api/sessions/register').send(newUser);
+      const response = await requester.post('/api/session/register').send(newUser);
       
       // Verificaciones
       expect(response.status).to.equal(200);
@@ -86,7 +86,7 @@ describe('Test Users Session api/session', function () {
         password: "sa@sa.com"
       };
   
-      const response = await requester.post('/api/sessions/login').send(user);
+      const response = await requester.post('/api/session/login').send(user);
       
       // Verificaciones
       expect(response.status).to.equal(200);
@@ -104,7 +104,7 @@ describe('Test Users Session api/session', function () {
   
     // Prueba para obtener la sesión actual del usuario
     it("Ruta: api/session/current con metodo GET", async () => {
-      const response = await requester.get('/api/sessions/current')
+      const response = await requester.get('/api/session/current')
         .set('Cookie', [`${cookie.name}=${cookie.value}`]);
       
       // Verificaciones

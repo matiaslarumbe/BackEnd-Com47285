@@ -45,7 +45,7 @@ paths:
             application/json:
               schema: 
                 items:
-                  $ref: '#/components/schemas/Product'
+                  $ref: '#/components/schemas/Products'
         '500':
           description: Error interno del servidor
   /api/products/{id}:  
@@ -132,7 +132,7 @@ paths:
           description: Error interno del servidor
 components:
   schemas:
-    Product:
+    Products:
       type: object
       properties:
         _id:

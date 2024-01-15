@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createCart, getCartById, addProductToCart, removeProductFromCart, updateCart,updateProductInCart, removeAllProductsFromCart } from "../controllers/cart.controllers.js";
+import { createCart, getCartById, addProductToCart, removeProductFromCart, updateCart,updateProductInCart, removeAllProductsFromCart, getAllCarts } from "../controllers/cart.controllers.js";
 
 const cartRouter = Router()
 
@@ -23,6 +23,10 @@ cartRouter.put('/:cid/products/:pid', updateProductInCart);
 
 // Ruta para eliminar todos los productos del carrito
 cartRouter.delete('/:cid', removeAllProductsFromCart);
+
+// Ruta para obtener todos los carritos
+cartRouter.get('/', getAllCarts);
+
 
 
 export default cartRouter

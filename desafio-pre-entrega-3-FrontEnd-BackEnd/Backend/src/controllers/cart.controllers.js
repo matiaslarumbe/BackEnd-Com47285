@@ -33,9 +33,9 @@ export const addProductToCart = async (req, res) => {
         if (cart) {
             const prod = await productModel.findById(pid);
             if (prod) {
-                const productIndex = cart.products.findIndex(product => product.id_prod === pid);
+                const productIndex = cart.products.findIndex(product => product.id_prod.id.toString() === pid);
                 if (productIndex !== -1) {
-                    cart.products[productIndex].quantity = quantity;
+                    cart.products[productIndex].quantity += quantity;
                 } else {
                     cart.products.push({ id_prod: pid, quantity: quantity });
                 }
@@ -124,5 +124,14 @@ export const removeAllProductsFromCart = async (req, res) => {
         }
     } catch (error) {
         res.status(400).send({ respuesta: 'Error al eliminar productos del carrito', mensaje: error });
+    }
+};
+
+export const getAllCarts = async (req, res) => {
+    try {
+        const carts = await cartModel.find();
+        res.status(200).send({ respuesta: 'OK', mensaje: carts });
+    } catch (error) {
+        res.status(400).send({ respuesta: 'Error en obtener carritos', mensaje: error });
     }
 };
