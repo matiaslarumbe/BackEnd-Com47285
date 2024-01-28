@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "supertest": "mocha test/supertest.test.js"
+    "supertest": "mocha test/supertest.test.js",
+    "supertestproduct": "mocha test/supertestproduct.test.js"
   },
   "keywords": [],
   "author": "",

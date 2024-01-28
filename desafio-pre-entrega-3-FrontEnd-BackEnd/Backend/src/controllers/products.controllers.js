@@ -93,6 +93,8 @@
 
 // }
 import { productModel } from "../models/products.models.js";
+import { userModel } from "../models/users.models.js";
+
 
 export const getProducts = async (req, res) => {
     const { limit, page, filter, sort } = req.query;
@@ -204,3 +206,32 @@ export const deleteProductById = async (req, res) => {
         res.status(500).send({ error: `Error en eliminar producto ${error}` });
     }
 };
+
+
+export const getProductsForUser = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const user = await userModel.findById(userId);
+
+        // Obtener productos y aplicar descuento según el estado "premium" del usuario
+        const products = await productModel.find(); 
+        const discountedProducts = products.map(product => ({
+            ...product._doc,
+            price: applyDiscount(product.price, user.isPremium)
+        }));
+
+        res.status(200).send({ respuesta: 'OK', mensaje: discountedProducts });
+    } catch (error) {
+        res.status(400).send({ respuesta: 'Error en obtener productos', mensaje: error });
+    }
+};
+
+export const applyDiscount = (price, isPremium) => {
+    if (isPremium) {
+        // Aplicar un 10% de descuento para usuarios "premium"
+        return price * 0.9;
+    }
+    return price;
+};
+ 
+ 

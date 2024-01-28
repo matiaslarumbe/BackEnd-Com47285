@@ -1,12 +1,10 @@
 import { Router } from "express";
 import { sendRecoveryMail } from "../config/nodemailer.js";
 import jwt from 'jsonwebtoken';
-import {userModel} from "../models/users.models.js"
+import { userModel } from "../models/users.models.js";
 import { createHash } from '../utils/bcrypt.js';
 
 const recoveryRouter = Router();
-
-
 
 recoveryRouter.post('/password-recovery', async (req, res) => {
     const { email } = req.body;
@@ -32,8 +30,6 @@ recoveryRouter.post('/password-recovery', async (req, res) => {
     }
 });
 
-
-
 recoveryRouter.post('/reset-password/:token', async (req, res) => {
     const { token } = req.params;
     const { newPassword, newPassword2 } = req.body;
@@ -43,19 +39,24 @@ recoveryRouter.post('/reset-password/:token', async (req, res) => {
         const { email } = decoded;
 
         if (newPassword === newPassword2) {
-            const user = await userModel.findOne({ email });
+            // Verificar que la nueva contraseña cumpla con tus criterios de seguridad
+            if (isValidPassword(newPassword)) {
+                const user = await userModel.findOne({ email });
 
-            if (!user) {
-                return res.status(404).send('Email incorrecto');
+                if (!user) {
+                    return res.status(404).send('Email incorrecto');
+                }
+
+                // Hashear la nueva contraseña antes de guardarla
+                const passwordHash = createHash(newPassword);
+                user.password = passwordHash;
+
+                await user.save();
+
+                res.status(200).send('Contraseña modificada correctamente');
+            } else {
+                res.status(400).send('La nueva contraseña no cumple con los criterios de seguridad');
             }
-
-            // Hashear la nueva contraseña antes de guardarla
-            const passwordHash = createHash(newPassword);
-            user.password = passwordHash;
-
-            await user.save();
-
-            res.status(200).send('Contraseña modificada correctamente');
         } else {
             res.status(400).send('Las contraseñas deben ser idénticas');
         }
@@ -64,5 +65,10 @@ recoveryRouter.post('/reset-password/:token', async (req, res) => {
     }
 });
 
+// Función para validar la fortaleza de la contraseña
+function isValidPassword(password) {
+    return password.length >= 8;
+}
 
 export default recoveryRouter;
+

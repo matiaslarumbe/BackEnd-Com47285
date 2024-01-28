@@ -52,3 +52,21 @@ export const deleteUserById = async (req, res) => {
         res.status(400).send({ respuesta: 'Error en eliminar usuario', mensaje: error });
     }
 };
+
+export const createUser = async (req, res) => {
+    const { first_name, last_name, age, email, password, isPremium } = req.body;
+    try {
+        const newUser = await userModel.create({
+            first_name,
+            last_name,
+            age,
+            email,
+            password,
+            isPremium: isPremium || false  // Valor predeterminado a false si no se proporciona
+        });
+        res.status(201).send(newUser);
+    } catch (error) {
+        // Manejar errores
+        res.status(400).send({ respuesta: 'Error en crear usuario', mensaje: error });
+    }
+};

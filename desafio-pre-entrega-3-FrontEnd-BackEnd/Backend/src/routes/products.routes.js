@@ -6,8 +6,8 @@ const productRouter = Router()
 
 productRouter.get('/', getProducts)
 productRouter.get('/:id', getProductById)
-productRouter.post('/', passportError('jwt'), authorization('user'), postProduct)
-productRouter.put('/:id', passportError('jwt'), authorization('Admin'), putProductById)
-productRouter.delete('/:id', passportError('jwt'), authorization('Admin'), deleteProductById)
+productRouter.post('/', passportError('jwt'), authorization('user', 'premium'), postProduct)
+productRouter.put('/:id', passportError('jwt'), authorization('Admin','premium'), putProductById)
+productRouter.delete('/:id', passportError('jwt'), authorization('Admin','premium'), deleteProductById)
 
 export default productRouter
