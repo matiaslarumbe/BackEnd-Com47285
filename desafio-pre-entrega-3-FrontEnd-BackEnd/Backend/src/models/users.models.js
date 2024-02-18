@@ -25,18 +25,26 @@ const userSchema = new Schema({
         type: String,
         required: true
      },
-     rol:{
+     rol: {
         type: String,
+        enum: ['user', 'admin', 'premium'],
         default: 'user'
-
-     },
+    },
      cart: {
         type: Schema.Types.ObjectId, ref: 'carts'
      },
      isPremium: {
         type: Boolean,
         default: false
-    }
+    },
+    documents: [
+        {
+            name: { type: String, required: true },
+            reference: { type: String, required: true }
+        }
+    ],
+
+    last_connection: { type: Date, default: null }
 })
 
 
@@ -51,6 +59,5 @@ userSchema.pre('save', async function(next){
     }
 
 })
-
 
 export const userModel = model('users', userSchema)

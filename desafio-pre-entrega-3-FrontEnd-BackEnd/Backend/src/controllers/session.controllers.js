@@ -15,9 +15,8 @@ export const login = async (req, res) => {
         // };
 
         const token = generateToken(req.user);
-       
-
-        res.status(200).send({ token });
+        
+        res.status(200).send({ token, rol: req.user.rol });
     } catch (error) {
         res.status(500).send({ mensaje: `Error al iniciar sesión: ${error}` });
     }

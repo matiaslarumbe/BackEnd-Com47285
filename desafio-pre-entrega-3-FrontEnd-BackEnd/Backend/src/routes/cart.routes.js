@@ -28,5 +28,4 @@ cartRouter.delete('/:cid', removeAllProductsFromCart);
 cartRouter.get('/', getAllCarts);
 
 
-
 export default cartRouter

@@ -207,7 +207,7 @@ export const deleteProductById = async (req, res) => {
     }
 };
 
-
+//Creacion y autorizaciones de usuarios Admin y Premium
 export const getProductsForUser = async (req, res) => {
     try {
         const userId = req.params.userId;
@@ -233,5 +233,51 @@ export const applyDiscount = (price, isPremium) => {
     }
     return price;
 };
+
+export const getAllProducts = async (req, res) => {
+    try {
+        const userRol = req.user.rol; // Obtener el rol del usuario desde la solicitud
+        let products = await productModel.find({});
+
+        if (userRol === 'premium') {
+            // Aplicar descuento del 10% para usuarios premium
+            products = products.map(product => ({
+                ...product,
+                price: product.price * 0.9
+            }));
+        }
+
+        res.status(200).send(products);
+    } catch (error) {
+        res.status(400).send({ respuesta: 'Error al obtener productos', mensaje: error });
+    }
+};
+
+export const createProduct = async (req, res) => {
+    try {
+        const userRol = req.user.rol; // Obtener el rol del usuario desde la solicitud
+
+        if (userRol !== 'admin') {
+            return res.status(403).send({ respuesta: 'Acceso denegado', mensaje: 'Solo los administradores pueden crear productos' });
+        }
+        const { title, description, code, price, stock, category } = req.body;
+
+        const newProduct = await productModel.create({
+            title,
+            description,
+            code,
+            price,
+            stock,
+            category,
+        });
+        return res.status(201).send(newProduct);
+    } catch (error) {
+        console.error('Error al crear producto:', error);
+        return res.status(500).send({ respuesta: 'Error al crear producto', mensaje: error });
+    }
+};
+
+
+
  
  
